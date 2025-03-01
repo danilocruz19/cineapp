@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:telas_testes/screens/home.dart';
+import 'package:telas_testes/features/home/home.dart';
 
 class PagamentoConcluido extends StatefulWidget {
   const PagamentoConcluido({super.key});
@@ -19,7 +19,7 @@ class _PagamentoConcluidoState extends State<PagamentoConcluido> {
         _showCheck = true;
       });
     });
-    Future.delayed(Duration(seconds: 10), () {
+    Future.delayed(Duration(seconds: 5), () {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => Home()),

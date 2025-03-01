@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:telas_testes/model/confirmar_compra_model.dart';
+import 'package:telas_testes/features/confirmar_compra/models/confirmar_compra_model.dart';
 
 class ConfirmarCompraViewmodel extends ChangeNotifier {
   ConfirmarCompraModel confirmarModel = ConfirmarCompraModel(

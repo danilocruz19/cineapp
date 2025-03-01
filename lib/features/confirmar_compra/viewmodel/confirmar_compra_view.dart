@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telas_testes/screens/pagamento_concluido.dart';
-import 'package:telas_testes/viewmodel/confirmar_compra_viewmodel.dart';
-import 'package:telas_testes/viewmodel/home_viewmodel.dart';
+import 'package:telas_testes/features/pagamento_concluido/pagamento_concluido.dart';
+import 'package:telas_testes/features/confirmar_compra/confirmar_compra_viewmodel.dart';
+import 'package:telas_testes/features/home/viewmodel/home_viewmodel.dart';
 
 class ConfirmarCompraView extends StatefulWidget {
   const ConfirmarCompraView({super.key});
@@ -25,14 +25,39 @@ class _ConfirmarCompraViewState extends State<ConfirmarCompraView> {
 
     void _animatedButton() {
       setState(() {
-        _carregarPagamento = true;
-      });
+        if (metodoDePagamentoSelecionadoIndex == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Selecione um método de pagamento',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              backgroundColor: Colors.red,
+            ),
+          );
+        } else {
+          setState(() {
+            _carregarPagamento = true;
+          });
 
-      Future.delayed(Duration(seconds: 4), () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => PagamentoConcluido()),
-        );
+          Future.delayed(Duration(seconds: 3), () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PagamentoConcluido()),
+            );
+            for (var cadeira
+                in homeViewModel.homeModel.quantidadeDeEscolhidos) {
+              homeViewModel.marcarOcupado(cadeira - 1);
+            }
+            homeViewModel.homeModel.quantidadeDeEscolhidos.clear();
+          });
+        }
       });
     }
 
@@ -107,6 +132,8 @@ class _ConfirmarCompraViewState extends State<ConfirmarCompraView> {
                           return ListTile(
                             title: Text(pagamentos),
                             trailing: Checkbox(
+                              checkColor: Colors.white,
+                              activeColor: Colors.amber,
                               value: metodoDePagamentoSelecionadoIndex == index,
                               onChanged: (bool? newValue) {
                                 setState(() {

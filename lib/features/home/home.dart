@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telas_testes/screens/confirmar_compra_view.dart';
-import 'package:telas_testes/viewmodel/home_viewmodel.dart';
+import 'package:telas_testes/features/confirmar_compra/viewmodel/confirmar_compra_view.dart';
+import 'package:telas_testes/features/home/viewmodel/home_viewmodel.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,15 +9,30 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool assentosVisivel = false;
-  List<dynamic> ocupados = [];
   @override
   Widget build(BuildContext context) {
     final homeModel = context.watch<HomeViewModel>();
     String frase = 'ingresso';
 
     return Scaffold(
-      appBar: AppBar(title: Text('Cinefilm'), centerTitle: true),
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.movie_filter_sharp,
+              size: 40,
+              color: Colors.amber,
+            ),
+            SizedBox(width: 10),
+            Text(
+              'cinefilms',
+              style: TextStyle(color: Colors.amber),
+            ),
+          ],
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(30),
@@ -32,33 +47,38 @@ class _HomeState extends State<Home> {
                   ),
                   itemCount: homeModel.homeModel.itens.length,
                   itemBuilder: (context, index) {
-                    int revertendoIndex =
-                        homeModel.homeModel.itens.length - 1 - index;
+                    final cadeira = index + 1;
+                    bool isOcupado = homeModel.getAssentosOcupados().contains(
+                      index,
+                    );
                     return GestureDetector(
                       onTap: () {
-                        if (!ocupados.contains(revertendoIndex)) {
-                          homeModel.mudarEscolha(revertendoIndex);
+                        if (!isOcupado) {
+                          homeModel.mudarEscolha(index);
                         }
                       },
                       child: Card(
+                        color: isOcupado ? const Color.fromARGB(255, 30, 30, 30) : Colors.transparent,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              ocupados.contains(revertendoIndex)
+                              isOcupado
                                   ? Icons.person_off_outlined
-                                  : Icons.chair,
+                                  : (homeModel.homeModel.escolhidos[index]
+                                      ? Icons.check
+                                      : Icons.chair),
                               color:
-                                  homeModel
-                                          .homeModel
-                                          .escolhidos[revertendoIndex]
-                                      ? Colors.amber
-                                      : Colors.white,
+                                  isOcupado
+                                      ? Colors.grey
+                                      : (homeModel.homeModel.escolhidos[index]
+                                          ? Colors.amber
+                                          : Colors.white),
                             ),
                             Visibility(
-                              visible: assentosVisivel,
+                              visible: homeModel.assentosVisivel,
                               child: Text(
-                                '${homeModel.homeModel.itens[revertendoIndex]}',
+                                '${homeModel.homeModel.itens[index]}',
                               ),
                             ),
                           ],
@@ -92,15 +112,16 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     SwitchListTile(
-                      activeColor: Colors.green,
+                      activeColor: Colors.amber,
                       title: Text(
                         'Exibir número dos assentos',
                         style: TextStyle(fontSize: 15),
                       ),
-                      value: assentosVisivel,
+                      value: homeModel.assentosVisivel,
                       onChanged: (bool newValue) {
                         setState(() {
-                          assentosVisivel = !assentosVisivel;
+                          homeModel.assentosVisivel =
+                              !homeModel.assentosVisivel;
                         });
                       },
                     ),
@@ -166,6 +187,9 @@ class _HomeState extends State<Home> {
                       homeModel.homeModel.quantidadeDeEscolhidos.isEmpty
                           ? Colors.white
                           : Colors.amber,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
                 ),
                 onPressed: () {
                   if (homeModel.homeModel.quantidadeDeEscolhidos.isEmpty) {
@@ -181,26 +205,12 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     );
-                  } else {
-                    setState(() {
-                      for (
-                        int i = 0;
-                        i < homeModel.homeModel.escolhidos.length;
-                        i++
-                      ) {
-                        if (homeModel.homeModel.escolhidos[i]) {
-                          ocupados.add(i);
-                        }
-                      }
-                      homeModel.homeModel.escolhidos.fillRange(
-                        0,
-                        homeModel.homeModel.escolhidos.length,
-                        false,
-                      );
-                    });
+                  } else {                   
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => ConfirmarCompraView()),
+                      MaterialPageRoute(
+                        builder: (context) => ConfirmarCompraView(),
+                      ),
                     );
                   }
                 },
