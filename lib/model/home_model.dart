@@ -11,7 +11,7 @@ class HomeModel {
 
   factory HomeModel.inicializar() {
     return HomeModel(
-      escolhidos: List.generate(50, (index) => false),
+      escolhidos: List.generate(30, (index) => false),
       quantidadeDeEscolhidos: [],
       itens: List.generate(30, (index) => index + 1),
     );
