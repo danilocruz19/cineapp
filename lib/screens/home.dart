@@ -55,7 +55,7 @@ class _HomeState extends State<Home> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
-                      homeModel.homeModel.escolhidos.isEmpty
+                      homeModel.homeModel.quantidadeDeEscolhidos.isEmpty
                           ? Colors.white
                           : Colors.amber,
                 ),
@@ -66,12 +66,12 @@ class _HomeState extends State<Home> {
                   );
                 },
                 child: Text(
-                  homeModel.homeModel.escolhidos.isEmpty
+                  homeModel.homeModel.quantidadeDeEscolhidos.isEmpty
                       ? 'Selecione pelo menos um ingresso'
                       : "Confirmar a compra de ${homeModel.homeModel.quantidadeDeEscolhidos.length} ingressos",
                   style: TextStyle(
                     color:
-                        homeModel.homeModel.escolhidos.isEmpty
+                        homeModel.homeModel.quantidadeDeEscolhidos.isEmpty
                             ? Colors.black
                             : Colors.white,
                   ),

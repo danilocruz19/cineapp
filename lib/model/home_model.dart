@@ -13,7 +13,7 @@ class HomeModel {
     return HomeModel(
       escolhidos: List.generate(50, (index) => false),
       quantidadeDeEscolhidos: [],
-      itens: List.generate(50, (index) => index + 1),
+      itens: List.generate(30, (index) => index + 1),
     );
   }
 }

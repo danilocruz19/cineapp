@@ -11,4 +11,10 @@ class ConfirmarCompraViewmodel extends ChangeNotifier {
   String numeroFormatado(double numero) {
     return NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(numero);
   }
+
+  List<String> metodoDePagamento = [
+    'Dinheiro',
+    'Pix',
+    'Débito / Crédito'
+  ];
 }
