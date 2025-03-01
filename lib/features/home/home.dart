@@ -12,7 +12,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final homeModel = context.watch<HomeViewModel>();
-    String frase = 'ingresso';
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +46,6 @@ class _HomeState extends State<Home> {
                   ),
                   itemCount: homeModel.homeModel.itens.length,
                   itemBuilder: (context, index) {
-                    final cadeira = index + 1;
                     bool isOcupado = homeModel.getAssentosOcupados().contains(
                       index,
                     );

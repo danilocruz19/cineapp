@@ -20,10 +20,8 @@ class _ConfirmarCompraViewState extends State<ConfirmarCompraView> {
     final cadeirasSelecionadas = homeViewModel.homeModel.quantidadeDeEscolhidos;
     cadeirasSelecionadas.sort();
     final confirmacaoDeCompra = context.watch<ConfirmarCompraViewmodel>();
-    final metodoDePagamento =
-        confirmacaoDeCompra.confirmarModel.metodoDePagamento;
 
-    void _animatedButton() {
+    void animatedButton() {
       setState(() {
         if (metodoDePagamentoSelecionadoIndex == null) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -75,7 +73,7 @@ class _ConfirmarCompraViewState extends State<ConfirmarCompraView> {
                       style: TextStyle(fontSize: 20),
                     ),
                     SizedBox(height: 10),
-                    Container(
+                    SizedBox(
                       height: 80,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
@@ -120,7 +118,7 @@ class _ConfirmarCompraViewState extends State<ConfirmarCompraView> {
                     ),
                     SizedBox(height: 50),
                     Text('Método de pagamento'),
-                    Container(
+                    SizedBox(
                       height: 200,
                       child: ListView.separated(
                         itemBuilder: (context, index) {
@@ -128,7 +126,6 @@ class _ConfirmarCompraViewState extends State<ConfirmarCompraView> {
                               confirmacaoDeCompra
                                   .confirmarModel
                                   .metodoDePagamento[index];
-                          final pagamento = metodoDePagamento[index];
                           return ListTile(
                             title: Text(pagamentos),
                             trailing: Checkbox(
@@ -164,7 +161,7 @@ class _ConfirmarCompraViewState extends State<ConfirmarCompraView> {
                           ),
                         ),
                         child: InkWell(
-                          onTap: _animatedButton,
+                          onTap: animatedButton,
                           child: Center(
                             child:
                                 _carregarPagamento
