@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telas_testes/features/home/home.dart';
-import 'package:telas_testes/features/confirmar_compra/confirmar_compra_viewmodel.dart';
+import 'package:telas_testes/features/confirmar_compra/viewmodel/confirmar_compra_viewmodel.dart';
 import 'package:telas_testes/features/home/viewmodel/home_viewmodel.dart';
 
 void main() {

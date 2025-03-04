@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telas_testes/features/pagamento_concluido/pagamento_concluido.dart';
-import 'package:telas_testes/features/confirmar_compra/confirmar_compra_viewmodel.dart';
+import 'package:telas_testes/features/confirmar_compra/viewmodel/confirmar_compra_viewmodel.dart';
 import 'package:telas_testes/features/home/viewmodel/home_viewmodel.dart';
+import 'package:telas_testes/features/tela_do_pix/tela_pix_view.dart';
 
 class ConfirmarCompraView extends StatefulWidget {
   const ConfirmarCompraView({super.key});
@@ -45,10 +46,17 @@ class _ConfirmarCompraViewState extends State<ConfirmarCompraView> {
           });
 
           Future.delayed(Duration(seconds: 3), () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PagamentoConcluido()),
-            );
+            if (metodoDePagamentoSelecionadoIndex == 1) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TelaPixView()),
+              );
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PagamentoConcluido()),
+              );
+            }
             for (var cadeira
                 in homeViewModel.homeModel.quantidadeDeEscolhidos) {
               homeViewModel.marcarOcupado(cadeira - 1);
@@ -183,3 +191,5 @@ class _ConfirmarCompraViewState extends State<ConfirmarCompraView> {
     );
   }
 }
+
+
