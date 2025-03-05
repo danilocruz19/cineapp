@@ -10,6 +10,8 @@ class CartaoView extends StatefulWidget {
   State<CartaoView> createState() => _CartaoViewState();
 }
 
+bool _animacaoText = false;
+
 class _CartaoViewState extends State<CartaoView> {
   final TextEditingController _controllerCartao = TextEditingController();
   final TextEditingController _controllerData = TextEditingController();
@@ -17,16 +19,18 @@ class _CartaoViewState extends State<CartaoView> {
   bool _carregarAnimacao = false;
 
   void carregarAnimacao() {
-    setState(() {
-      _carregarAnimacao = true;
-    });
-    Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => PagamentoConcluido()),
-        (_) => false,
-      );
-    });
+    if (_key.currentState!.validate()) {
+      setState(() {
+        _carregarAnimacao = true;
+      });
+      Future.delayed(Duration(seconds: 3), () {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => PagamentoConcluido()),
+          (_) => false,
+        );
+      });
+    }
   }
 
   String cardNumber = '';
@@ -52,7 +56,24 @@ class _CartaoViewState extends State<CartaoView> {
         cvv = _controllerCvv.text;
       });
     });
+
+    _controllerCartao.addListener(_verificarTamanho);
   }
+
+  @override
+  void dispose() {
+    _controllerCartao.removeListener(_verificarTamanho);
+    _controllerCartao.dispose();
+    super.dispose();
+  }
+
+  void _verificarTamanho() {
+    setState(() {
+      _animacaoText = _controllerCartao.text.length == 16;
+    });
+  }
+
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +82,7 @@ class _CartaoViewState extends State<CartaoView> {
       body: Column(
         children: [
           Form(
+            key: _key,
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
@@ -92,10 +114,15 @@ class _CartaoViewState extends State<CartaoView> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'O campo de cartão não pode estar vazio';
+                      }
+                      return null;
+                    },
                     controller: _controllerCartao,
-                    decoration: InputDecoration(                      
+                    decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        
                         borderSide: BorderSide(
                           color: const Color.fromARGB(255, 109, 109, 109),
                         ),
@@ -104,23 +131,27 @@ class _CartaoViewState extends State<CartaoView> {
                       labelText: 'Número do cartão',
                     ),
                     keyboardType: TextInputType.number,
+                    maxLength: 16,
                   ),
                   SizedBox(height: 10),
-                  TextFormField(
-                    keyboardType: TextInputType.datetime,
-                    controller: _controllerData,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: const Color.fromARGB(255, 109, 109, 109),
+                  if (_animacaoText)
+                   Column(
+                    children: [
+                       TextFormField(
+                      keyboardType: TextInputType.datetime,
+                      controller: _controllerData,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: const Color.fromARGB(255, 109, 109, 109),
+                          ),
                         ),
+                        border: OutlineInputBorder(),
+                        labelText: 'Data de validade',
                       ),
-                      border: OutlineInputBorder(),
-                      labelText: 'Data de validade',
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  TextFormField(
+                     SizedBox(height: 10),
+                     TextFormField(
                     keyboardType: TextInputType.number,
                     controller: _controllerCvv,
                     decoration: InputDecoration(
@@ -133,6 +164,8 @@ class _CartaoViewState extends State<CartaoView> {
                       labelText: 'CVV',
                     ),
                   ),
+                    ],
+                   ),
                   SizedBox(height: 20),
                   ContaianerAnimated(
                     durationAnimated: 400,
