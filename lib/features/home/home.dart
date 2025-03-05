@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telas_testes/features/confirmar_compra/confirmar_compra_view.dart';
 import 'package:telas_testes/features/home/viewmodel/home_viewmodel.dart';
+import 'package:telas_testes/paint_teste.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -18,16 +19,9 @@ class _HomeState extends State<Home> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.movie_filter_sharp,
-              size: 40,
-              color: Colors.amber,
-            ),
+            Icon(Icons.movie_filter_sharp, size: 40, color: Colors.amber),
             SizedBox(width: 10),
-            Text(
-              'cinefilms',
-              style: TextStyle(color: Colors.amber),
-            ),
+            Text('cinefilms', style: TextStyle(color: Colors.amber)),
           ],
         ),
         centerTitle: true,
@@ -56,7 +50,10 @@ class _HomeState extends State<Home> {
                         }
                       },
                       child: Card(
-                        color: isOcupado ? const Color.fromARGB(255, 30, 30, 30) : Colors.transparent,
+                        color:
+                            isOcupado
+                                ? const Color.fromARGB(255, 30, 30, 30)
+                                : Colors.transparent,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -203,7 +200,7 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     );
-                  } else {                   
+                  } else {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -228,6 +225,14 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => paint_teste()),
+      //     );
+      //   },
+      // ),
     );
   }
 }

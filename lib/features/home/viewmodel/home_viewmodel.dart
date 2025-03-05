@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:telas_testes/features/home/model/home_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
   HomeModel homeModel = HomeModel.inicializar();
   List<int> ocupados = [];
    bool assentosVisivel = false;
-
-  void mudarEscolha(int index) {
+  
+  void mudarEscolha(int index) async{
+    
     final cadeira = index + 1;
     homeModel.escolhidos[index] = !homeModel.escolhidos[index];
 

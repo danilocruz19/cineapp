@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telas_testes/features/tela_do_cartao/cartao_view.dart';
 import 'package:telas_testes/features/pagamento_concluido/pagamento_concluido.dart';
 import 'package:telas_testes/features/confirmar_compra/viewmodel/confirmar_compra_viewmodel.dart';
 import 'package:telas_testes/features/home/viewmodel/home_viewmodel.dart';
 import 'package:telas_testes/features/tela_do_pix/tela_pix_view.dart';
+import 'package:telas_testes/models/animated_container.dart';
 
 class ConfirmarCompraView extends StatefulWidget {
   const ConfirmarCompraView({super.key});
@@ -50,6 +52,11 @@ class _ConfirmarCompraViewState extends State<ConfirmarCompraView> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => TelaPixView()),
+              );
+            } else if (metodoDePagamentoSelecionadoIndex == 2) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartaoView()),
               );
             } else {
               Navigator.push(
@@ -158,30 +165,11 @@ class _ConfirmarCompraViewState extends State<ConfirmarCompraView> {
                       ),
                     ),
                     Center(
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 400),
-                        width: _carregarPagamento ? 50 : 200,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(
-                            _carregarPagamento ? 25 : 8,
-                          ),
-                        ),
-                        child: InkWell(
-                          onTap: animatedButton,
-                          child: Center(
-                            child:
-                                _carregarPagamento
-                                    ? CircularProgressIndicator(
-                                      color: Colors.white,
-                                    )
-                                    : Text(
-                                      'Confirmar pagamento',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                          ),
-                        ),
+                      child: ContaianerAnimated(
+                        durationAnimated: 400,
+                        comecarAnimacao: _carregarPagamento,
+                        funcadoDoBotao: animatedButton,
+                        textoDoBotao: 'Confirmar pagamento',
                       ),
                     ),
                   ],
@@ -191,5 +179,3 @@ class _ConfirmarCompraViewState extends State<ConfirmarCompraView> {
     );
   }
 }
-
-

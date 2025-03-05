@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:telas_testes/features/home/home.dart';
 import 'package:telas_testes/features/pagamento_concluido/pagamento_concluido.dart';
+import 'package:telas_testes/models/animated_container.dart';
 
 class TelaPixView extends StatefulWidget {
   const TelaPixView({super.key});
@@ -68,26 +68,11 @@ class _PixQRCodeState extends State<PixQRCode> {
           },
         ),
         SizedBox(height: 30),
-        AnimatedContainer(
-          duration: Duration(milliseconds: 400),
-          width: _carregarAnimacao ? 50 : 200,
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.amber,
-            borderRadius: BorderRadius.circular(_carregarAnimacao ? 25 : 8),
-          ),
-          child: InkWell(
-            onTap: animatedButton,
-            child: Center(
-              child:
-                  _carregarAnimacao
-                      ? CircularProgressIndicator(color: Colors.white)
-                      : Text(
-                        'Confirmar pagamento',
-                        style: TextStyle(color: Colors.white),
-                      ),
-            ),
-          ),
+        ContaianerAnimated(
+          durationAnimated: 400,
+          comecarAnimacao: _carregarAnimacao,
+          funcadoDoBotao: animatedButton,
+          textoDoBotao: 'Confirmar pagamento',
         ),
       ],
     );
