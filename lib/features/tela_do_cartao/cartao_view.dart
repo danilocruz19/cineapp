@@ -116,7 +116,7 @@ class _CartaoViewState extends State<CartaoView> {
                         ),
                       ),
                       border: OutlineInputBorder(),
-                      labelText: 'Data de válidade',
+                      labelText: 'Data de validade',
                     ),
                   ),
                   SizedBox(height: 10),
