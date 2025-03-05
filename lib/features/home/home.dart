@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telas_testes/features/confirmar_compra/confirmar_compra_view.dart';
 import 'package:telas_testes/features/home/viewmodel/home_viewmodel.dart';
-import 'package:telas_testes/paint_teste.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
   State<Home> createState() => _HomeState();
 }
@@ -124,51 +125,45 @@ class _HomeState extends State<Home> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Container(
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 10,
-                                backgroundColor: Colors.white,
-                              ),
-                              SizedBox(width: 5),
-                              Text('Disponível'),
-                            ],
-                          ),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.white,
+                            ),
+                            SizedBox(width: 5),
+                            Text('Disponível'),
+                          ],
                         ),
-                        Container(
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 10,
-                                backgroundColor: Colors.amber,
-                              ),
-                              SizedBox(width: 5),
-                              Text('Selecionado'),
-                            ],
-                          ),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.amber,
+                            ),
+                            SizedBox(width: 5),
+                            Text('Selecionado'),
+                          ],
                         ),
-                        Container(
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 10,
-                                backgroundColor: const Color.fromARGB(
-                                  255,
-                                  34,
-                                  41,
-                                  45,
-                                ),
-                                child: Icon(
-                                  Icons.person_off_outlined,
-                                  size: 15,
-                                  color: Colors.black,
-                                ),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 10,
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                34,
+                                41,
+                                45,
                               ),
-                              SizedBox(width: 5),
-                              Text('Ocupado'),
-                            ],
-                          ),
+                              child: Icon(
+                                Icons.person_off_outlined,
+                                size: 15,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            Text('Ocupado'),
+                          ],
                         ),
                       ],
                     ),

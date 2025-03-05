@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:telas_testes/features/home/model/home_model.dart';
 
 class HomeViewModel extends ChangeNotifier {

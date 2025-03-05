@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:telas_testes/features/pagamento_concluido/pagamento_concluido.dart';
-import 'package:telas_testes/features/tela_do_pix/tela_pix_view.dart';
 import 'package:telas_testes/models/animated_container.dart';
 
 class CartaoView extends StatefulWidget {
@@ -12,9 +11,9 @@ class CartaoView extends StatefulWidget {
 }
 
 class _CartaoViewState extends State<CartaoView> {
-  TextEditingController _controllerCartao = TextEditingController();
-  TextEditingController _controllerData = TextEditingController();
-  TextEditingController _controllerCvv = TextEditingController();
+  final TextEditingController _controllerCartao = TextEditingController();
+  final TextEditingController _controllerData = TextEditingController();
+  final TextEditingController _controllerCvv = TextEditingController();
   bool _carregarAnimacao = false;
 
   void carregarAnimacao() {
@@ -79,7 +78,6 @@ class _CartaoViewState extends State<CartaoView> {
                     onCreditCardWidgetChange: (
                       CreditCardBrand creditCardBrand,
                     ) {
-                      CustomCardTypeIcon:
                       [
                         CustomCardTypeIcon(
                           cardType: CardType.mastercard,

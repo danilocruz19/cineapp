@@ -19,6 +19,8 @@ class _TelaPixViewState extends State<TelaPixView> {
 }
 
 class PixQRCode extends StatefulWidget {
+  const PixQRCode({super.key});
+
   @override
   State<PixQRCode> createState() => _PixQRCodeState();
 }
